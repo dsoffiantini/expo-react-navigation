@@ -1,14 +1,18 @@
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
+import ScreenOne from '@/components/ScreenOne';
+import ScreenTwo from '@/components/ScreenTwo';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
+
+const Tabs = createMaterialBottomTabNavigator()
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
@@ -28,10 +32,10 @@ export default function RootLayout() {
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
+      <Tabs.Navigator>
+        <Tabs.Screen name="One" component={ScreenOne} />
+        <Tabs.Screen name="Two" component={ScreenTwo} />
+      </Tabs.Navigator>
     </ThemeProvider>
   );
 }
